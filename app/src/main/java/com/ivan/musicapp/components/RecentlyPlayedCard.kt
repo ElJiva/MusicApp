@@ -35,6 +35,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.ui.unit.dp
 import com.ivan.musicapp.models.Album
 import com.ivan.musicapp.ui.theme.MusicAccent
 import com.ivan.musicapp.ui.theme.MusicDark
@@ -131,58 +134,62 @@ fun RecentlyPlayedCard(
     album: Album,
     onClick: () -> Unit
 ) {
-    Row(
+    Card(
         modifier = Modifier
             .padding(vertical = 4.dp, horizontal = 16.dp)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(MusicAccent.copy(alpha = 0.4f))
-            .clickable(onClick = onClick)
-            .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .clickable(onClick = onClick),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        AsyncImage(
-            model = album.image,
-            contentDescription = album.title,
-            contentScale = ContentScale.Crop,
+        Row(
             modifier = Modifier
-                .size(48.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(MusicAccent.copy(alpha = 0.2f))
-        )
-
-        Spacer(modifier = Modifier.width(16.dp))
-
-        Column(
-            modifier = Modifier.weight(1f)
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = album.title,
-                fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.titleMedium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+            AsyncImage(
+                model = album.image,
+                contentDescription = album.title,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(MusicAccent.copy(alpha = 0.2f))
             )
-            Spacer(modifier = Modifier.height(4.dp))
 
-            Text(
-                text = "${album.artist} • Popular Song",
-                style = MaterialTheme.typography.bodySmall,
-                // --- USAMOS COLORES DEL TEMA ---
-                color = MusicDark.copy(alpha = 0.8f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
+            Spacer(modifier = Modifier.width(16.dp))
 
-        Spacer(modifier = Modifier.width(8.dp))
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = album.title,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Spacer(modifier = Modifier.height(4.dp))
 
-        IconButton(onClick = { }) {
-            Icon(
-                imageVector = Icons.Default.MoreVert,
-                contentDescription = "More options",
-                tint = MusicDark.copy(alpha = 0.8f)
-            )
+                Text(
+                    text = "${album.artist} • Popular Song",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MusicDark.copy(alpha = 0.8f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            IconButton(onClick = { }) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = "More options",
+                    tint = MusicDark.copy(alpha = 0.8f)
+                )
+            }
         }
     }
 }
