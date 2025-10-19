@@ -40,7 +40,12 @@ class MainActivity : ComponentActivity() {
                         }
                         composable<AlbumDetailScreenRoute> { backStackEntry ->
                             val route = backStackEntry.toRoute<AlbumDetailScreenRoute>()
-                            DetailScreen(id = route.id)
+                            DetailScreen(
+                                id = route.id,
+                                onBackClick = {
+                                    navController.popBackStack()
+                                }
+                            )
                         }
                     }
                 }
